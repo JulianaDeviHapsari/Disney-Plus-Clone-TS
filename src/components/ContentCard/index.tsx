@@ -4,7 +4,7 @@ import styles from "./index.module.css";
 const ContentCard = () => {
 
     return (
-        <div className={styles.continer}>
+        <div className={styles.container}>
             <div className={styles.content}>
             <div className={styles.poster}>
                 <img 
@@ -18,7 +18,7 @@ const ContentCard = () => {
                 <img 
                 src="https://i.ytimg.com/vi/KdA82prVlAw/maxresdefault.jpg" 
                 alt="" 
-                width="10%"
+                width="100%"
                 />
             </div>
             <div className={styles.detailWrapper}>

@@ -1,14 +1,20 @@
 import styles from "./index.module.css";
 
-
-const ContentCard = () => {
+interface Props {
+    titles : string;
+    description: string;
+    posterImage: string;
+    bannerImage:  string;
+}
+const ContentCard = (props : Props) => {
+    const { titles, description, posterImage, bannerImage } = props;
 
     return (
         <div className={styles.container}>
             <div className={styles.content}>
             <div className={styles.poster}>
                 <img 
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuzXWWnCDypZVqZgbLfKB2x8d_Is9HeNbpRQ&s"
+                src={posterImage}
                 width="100%"
                 />
             </div>
@@ -16,14 +22,14 @@ const ContentCard = () => {
             <div className={styles.detail}>
             <div className= {styles.bannerWrapper}>
                 <img 
-                src="https://i.ytimg.com/vi/KdA82prVlAw/maxresdefault.jpg" 
+                src={bannerImage} 
                 alt="" 
                 width="100%"
                 />
             </div>
             <div className={styles.detailWrapper}>
-                <h3>Title</h3>
-                <p>description</p>
+                <h3>{titles}</h3>
+                <p>{description}</p>
                 </div>
             </div>
         </div>

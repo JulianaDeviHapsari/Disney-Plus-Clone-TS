@@ -1,13 +1,13 @@
 .container {
     width: 100%;
-    max-height: 250px;
+    /* max-height: 250px; */
     padding: 10px;
     position: relative;
 }
 
 .content{
+    border-radius: 8px;
     overflow: hidden;
-    border-radius: 8px;    
     width: 100%;
     height: 100%;
 }
@@ -21,11 +21,13 @@
 .detail{
     position: absolute;
     left: 50%;
+    overflow: hidden;
+    opacity: 0;
     top: 50%;
     transform: translate(-50%, -50%);
-    opacity: 0;
     width: 80%;
     height: 80%;
+    border-radius: 8px;
     overflow: hidden;
     background-color: #16181f;
     color: white;
@@ -33,17 +35,26 @@
 }
 
 .detailWrapper{
-    padding: 12px 16px;
+    padding: 6px 16px;
     width: 20%;
-    height: 60%;
+    height: 100%;
 }
 /* .bannerWrapper {
 
 } */
+.detailWrapper p {
+    font-size: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-clamp: 3;
+    width: 100%;
+    -webkit-line-clamp: 3;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+}
 
 .container:hover .detail{
     opacity: 1;
     width: 105%;
     height: 100%;
 }
-

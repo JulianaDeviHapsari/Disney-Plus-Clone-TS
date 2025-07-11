@@ -3,7 +3,7 @@
     position: absolute;
     height: 100vh;
     top : 0;
-    z-index: -1;
+    z-index: 1;
     left: 0;
 }
 
@@ -27,6 +27,10 @@
 }
 
 .bottomMask {
-    height : 100%;
+    box-sizing: 112px;
+    width: 100%;
+    padding-left: 112px;
+    padding-bottom: 80px;
+    position: absolute;
     background-color: rgb(15, 16, 20);
 }

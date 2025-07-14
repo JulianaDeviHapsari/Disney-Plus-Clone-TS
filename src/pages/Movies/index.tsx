@@ -6,7 +6,7 @@ import ScrollableSection from "../../components/ScrollableSection";
 import SectionItem from "../../components/ScrollableSection/SectionItem";
 import { useNavigate } from "react-router-dom";
  
-const Home = () => {
+const Movies = () => {
 
     const navigate = useNavigate();
 
@@ -35,4 +35,4 @@ const Home = () => {
     );
 };
 
-export default Home
+export default Movies

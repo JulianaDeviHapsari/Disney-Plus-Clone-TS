@@ -5,12 +5,13 @@ interface Props {
     description: string;
     posterImage: string;
     bannerImage:  string;
+    onClick?: ()=> void;
 }
 const ContentCard = (props : Props) => {
-    const { titles, description, posterImage, bannerImage } = props;
+    const { titles, description, posterImage, bannerImage, onClick } = props;
 
     return (
-        <div className={styles.container}>
+        <div className={styles.container} onClick={onClick}>
             <div className={styles.content}>
             <div className={styles.poster}>
                 <img 

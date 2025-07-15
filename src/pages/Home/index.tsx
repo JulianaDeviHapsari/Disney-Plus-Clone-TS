@@ -5,27 +5,34 @@ import ContentCard from "../../components/ContentCard";
 import ScrollableSection from "../../components/ScrollableSection";
 import SectionItem from "../../components/ScrollableSection/SectionItem";
 import { useNavigate } from "react-router-dom";
+import useFetch from "../../hooks/useFetch.ts";
+
+const API_KEY = "8fafde118eb2356812eb809bc7fa4ca5";
  
 const Home = () => {
-
     const navigate = useNavigate();
+    const {loading, data } = useFetch(
+        `https://api.themoviedb.org/3/trending/all/day?api_key=${API_KEY}`);
+
+        console.log({
+            loading,
+            data,
+        });
 
     return (
         <div> 
             <ImageBanner />
             <BannerDetail/>
             <BannerMask>
-            <ScrollableSection title="Popular Movies"> 
-             { Array(12).fill(0).map((_, index)=> (  
+            <ScrollableSection title="Popular"> 
+             {!loading && data && data.results.map((content, index)=> (  
          <SectionItem> 
             <ContentCard
                 onClick={()=> navigate("/content/bla")}
-                titles="Batman"
-                description="The Batman is a 2022 American 
-                superhero film based on the DC Comics character Batman. 
-                Directed by Matt Reeves from a screenplay he wrote with Peter Craig, it is a reboot of the Batman film franchise produced by DC Films. Robert Pattinson stars as Bruce Wayne / Batman alongside Zoë Kravitz, Paul Dano, Jeffrey Wright, John Turturro, Peter Sarsgaard, Andy Serkis, and Colin Farrell. The film sees Batman, in his second year fighting crime in Gotham City, uncover corruption with ties to his own family while pursuing the Riddler (Dano), a mysterious serial killer targeting the city's elite."
-                posterImage="https://images-cdn.ubuy.ae/634d0cc50dae823b9a54f97f-the-batman-movie-poster-i-am-the.jpg"
-                bannerImage="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFOgNp9sUMI-9pvFItx1AORIHR8Pj3O84oF9CgvaxOH82XN51L2GSJmxrmHR9s9l5gNdY&usqp=CAU"
+                titles={content.title}
+                description={content.overview}
+                posterImage={`https://image.tmdb.org/t/p/w500/${content.poster_path}`}
+                bannerImage={`https://image.tmdb.org/t/p/w500/${content.backdrop_path}`}
             />
            </SectionItem> 
             ))}  

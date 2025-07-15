@@ -3,6 +3,7 @@
     /* max-height: 250px; */
     padding: 10px;
     position: relative;
+    margin-left: 2vh;
 }
 
 .content{
@@ -35,8 +36,8 @@
 }
 
 .detailWrapper{
-    padding: 6px 16px;
-    width: 20%;
+    padding: 8px 8px 8px 8px;
+    width: 90%;
     height: 100%;
 }
 /* .bannerWrapper {

@@ -4,31 +4,52 @@ import BannerDetail from "../../components/BannerDetail";
 import ContentCard from "../../components/ContentCard";
 import ScrollableSection from "../../components/ScrollableSection";
 import SectionItem from "../../components/ScrollableSection/SectionItem";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import useFetch from "../../hooks/useFetch";
+import { API_KEY } from "../../constants";
  
 const MoviesDetail = () => {
-
     const navigate = useNavigate();
+    const { id}  = useParams();
+
+    const { data } = useFetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}`);
+    const { data: similarMoviesData } = useFetch(`https://api.themoviedb.org/3/movie/${id}/similar?api_key=${API_KEY}`);
+
+    console.log({
+        data,
+        similarMoviesData,
+    });
 
     return (
         <div> 
-            <ImageBanner />
-            <BannerDetail/>
+            <ImageBanner 
+            alt={ data?.title}
+            src={`https://image.tmdb.org/t/p/original/${data?.backdrop_path}`}
+            />
+            <BannerDetail
+            title={data?.title}
+            overview={data?.overview}
+            releaseDate={data?.release_date}
+            genres={data?.genres?.map((genre: any) => ({
+                id: genre.id, 
+                name:genre.name,
+            }))}
+
+            language={data?.original_language}
+            />
             <BannerMask>
             <ScrollableSection title="Similar Movies"> 
-             { Array(12).fill(0).map((_, index)=> (  
-         <SectionItem> 
+             {similarMoviesData?.results.map((movieItem: any)=> (  
+            <SectionItem key={movieItem.id}> 
             <ContentCard
-                onClick={()=> navigate("/movie/bla")}
-                titles="Batman"
-                description="The Batman is a 2022 American 
-                superhero film based on the DC Comics character Batman. 
-                Directed by Matt Reeves from a screenplay he wrote with Peter Craig, it is a reboot of the Batman film franchise produced by DC Films. Robert Pattinson stars as Bruce Wayne / Batman alongside Zoë Kravitz, Paul Dano, Jeffrey Wright, John Turturro, Peter Sarsgaard, Andy Serkis, and Colin Farrell. The film sees Batman, in his second year fighting crime in Gotham City, uncover corruption with ties to his own family while pursuing the Riddler (Dano), a mysterious serial killer targeting the city's elite."
-                posterImage="https://images-cdn.ubuy.ae/634d0cc50dae823b9a54f97f-the-batman-movie-poster-i-am-the.jpg"
-                bannerImage="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFOgNp9sUMI-9pvFItx1AORIHR8Pj3O84oF9CgvaxOH82XN51L2GSJmxrmHR9s9l5gNdY&usqp=CAU"
+                onClick={()=> navigate(`/movie/${movieItem.id}`)}
+                title={movieItem.title}
+                description={movieItem.overview}
+                posterImage={`https://image.tmdb.org/t/p/original/${movieItem.poster_path}`}
+                bannerImage={`https://image.tmdb.org/t/p/original/${movieItem.backdrop_path}`}
             />
-           </SectionItem> 
-            ))}  
+            </SectionItem> 
+            ))}
             </ScrollableSection>
             </BannerMask>
         </div>

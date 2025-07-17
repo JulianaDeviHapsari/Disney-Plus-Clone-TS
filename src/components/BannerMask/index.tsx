@@ -7,8 +7,7 @@ const BannerMask = (props: PropsWithChildren<unknown>) => {
             <div className={styles.container}>
             <div className={styles.topMask}/>
              <div className={styles.bottomMask}>
-              {children}
-             </div>
+              {children} </div>
             </div>
     );
 };

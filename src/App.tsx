@@ -6,6 +6,9 @@ import TVSeriesDetail from "./pages/TVSeriesDetail";
 import MovieDetail from "./pages/MovieDetail";
 import TVSeries from "./pages/TVSeries";
 import Movies from "./pages/Movies";
+import Login from "./pages/Login";
+import "./firebase";
+import SignUp from "./pages/SignUp";
 
 const router = createBrowserRouter ([
   {
@@ -21,11 +24,11 @@ const router = createBrowserRouter ([
         element: <Search />,
   }, 
   {
-    path: "/tv/bla",
+    path: "/tv/:id",
     element: <TVSeriesDetail/>,
   },
     {
-    path: "/movie/bla",
+    path: "/movie/:id",
     element: <MovieDetail />,
   },
   {
@@ -35,7 +38,16 @@ const router = createBrowserRouter ([
   {
     path: "/tvseries",
     element: <TVSeries />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/signup",
+    element: <SignUp />,
   }
+
     ]
   }
  

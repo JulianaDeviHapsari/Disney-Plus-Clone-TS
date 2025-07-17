@@ -16,7 +16,7 @@ const EpisodeItem = (props:Props) => {
     return (
         <div className={styles.Container}>
             <div className={styles.imageWrapper}>
-                <img src= {imageUrl} alt="episode" />
+                <img height = "100%" src= {imageUrl} alt="episode" />
             </div>
             <div className={styles.detailWrapper}>
                 <h3>{title}</h3>

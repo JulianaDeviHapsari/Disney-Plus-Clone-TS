@@ -1,23 +1,20 @@
 .container {
-    height: 50vw;
-    position: relative;
-    width: 50%;
-    max-width: 500px;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    margin-bottom: 32px;
-    margin-left: 35vw;
-    align-items: center;
-    padding-top: 16vw;
+  height: 50vw;
+  position: relative;
+  width: 50%;
+  max-width: 500px;
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+  margin-bottom: 32px;
 }
 
-.titles {
+.title {
     color: white;
     font-size: 48px;
-    justify-content: center;
+    /* justify-content: center;
     align-items: center;
-    text-align: center;
+    text-align: center; */
 }
 
 .section {
@@ -28,29 +25,33 @@
 .section1 span{
     color: white;
     font-weight: bold;
-    font-size: 14px;
+    font-size: 18px;
 }
 
 .section1 i {
     margin: 0 8px;
     color: white;
-    font-size: 14px;
+    font-size: 18px;
 }
 
 .section2 p {
-    font-size: 14px;
+    font-size: 18px;
     margin: 0;
     color: white;
     line-height: 20px;
 }
 
 .section3 span{
-    margin: 0 8px;
+    /* font-size: 14px; */
+    margin: 20 8px;
     color: white;
+
 }
 
 .section3 b {
     /* margin: 0 8px; */
+    font-size: 18px;
     color: white;
-    font-size: 14px;
+    /* font-size: 14px; */
+
 }

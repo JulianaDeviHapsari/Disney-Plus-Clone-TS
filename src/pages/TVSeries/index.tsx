@@ -1,38 +1,72 @@
-import ImageBanner from "../../components/ImageBanner";
-import BannerMask from "../../components/BannerMask";
+import { useNavigate } from "react-router-dom";
 import BannerDetail from "../../components/BannerDetail";
+import BannerMask from "../../components/BannerMask";
 import ContentCard from "../../components/ContentCard";
+import ImageBanner from "../../components/ImageBanner";
 import ScrollableSection from "../../components/ScrollableSection";
 import SectionItem from "../../components/ScrollableSection/SectionItem";
-import { useNavigate } from "react-router-dom";
- 
+import useFetch from "../../hooks/useFetch";
+import useGenres from "../../hooks/useGenres";
+import { API_KEY } from "../../constants";
+import useMapGenreIdtoName from "../../hooks/useMapGenreIdToName";
+// import useAuthState from "../../hooks/useAuthState";
+
 const TVSeries = () => {
+  const navigate = useNavigate();
+  const { loading, data } = useFetch(
+    `https://api.themoviedb.org/3/trending/tv/day?api_key=${API_KEY}`
+  );
 
-    const navigate = useNavigate();
+//   const auth = useAuthState();
 
-    return (
-        <div> 
-            <ImageBanner />
-            <BannerDetail/>
-            <BannerMask>
-            <ScrollableSection title="Popular TV Movies"> 
-             { Array(12).fill(0).map((_, index)=> (  
-         <SectionItem> 
-            <ContentCard
-                onClick={()=> navigate("/content/bla")}
-                titles="Batman"
-                description="The Batman is a 2022 American 
-                superhero film based on the DC Comics character Batman. 
-                Directed by Matt Reeves from a screenplay he wrote with Peter Craig, it is a reboot of the Batman film franchise produced by DC Films. Robert Pattinson stars as Bruce Wayne / Batman alongside Zoë Kravitz, Paul Dano, Jeffrey Wright, John Turturro, Peter Sarsgaard, Andy Serkis, and Colin Farrell. The film sees Batman, in his second year fighting crime in Gotham City, uncover corruption with ties to his own family while pursuing the Riddler (Dano), a mysterious serial killer targeting the city's elite."
-                posterImage="https://images-cdn.ubuy.ae/634d0cc50dae823b9a54f97f-the-batman-movie-poster-i-am-the.jpg"
-                bannerImage="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFOgNp9sUMI-9pvFItx1AORIHR8Pj3O84oF9CgvaxOH82XN51L2GSJmxrmHR9s9l5gNdY&usqp=CAU"
-            />
-           </SectionItem> 
-            ))}  
-            </ScrollableSection>
-            </BannerMask>
-        </div>
-    );
+  const { genres } = useGenres();
+
+  const firstContent = data?.results?.[0] || {};
+
+  const genreNames = useMapGenreIdtoName(firstContent.genre_ids, genres);
+
+//   const sectionTitle = auth
+//     ? `Hi ${auth.displayName}, recommended for you`
+//     : `Recommended for you`;
+
+  return (
+    <div>
+      <ImageBanner
+        alt={firstContent.name}
+        src={`https://image.tmdb.org/t/p/original/${firstContent.backdrop_path}`}
+      />
+      <BannerDetail
+        title={firstContent.name}
+        overview={firstContent.overview}
+        releaseDate={firstContent.first_air_date}
+        genres={genreNames}
+        language={firstContent.original_language}
+      />
+      <BannerMask>
+        <ScrollableSection title="Popular TV Series">
+          {!loading &&
+            data &&
+            data.results.map((content: any) => (
+              <SectionItem key={content.id}>
+                <ContentCard
+                  onClick={() =>
+                    navigate(
+                      `/${content.media_type === "movie" ? "movie" : "tv"}/${
+                        content.id
+                      }`
+                    )
+                  }
+                  title={content.title || firstContent.name}
+                  description={content.overview}
+                  posterImage={`https://image.tmdb.org/t/p/w500/${content.poster_path}`}
+                  bannerImage={`https://image.tmdb.org/t/p/w500/${content.backdrop_path}`}
+                />
+              </SectionItem>
+            ))}
+        </ScrollableSection>
+      </BannerMask>
+    </div>
+  );
 };
 
-export default TVSeries
+export default TVSeries;

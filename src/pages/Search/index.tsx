@@ -1,34 +1,93 @@
+import { type ChangeEvent, useState } from "react";
 import ContentCard from "../../components/ContentCard";
 import styles from "./index.module.css";
+import useFetch from "../../hooks/useFetch";
+import { API_KEY } from "../../constants";
+import useDebounce from "../../hooks/useDebounce";
 
 const Search = () => {
-    return (
+  const [search, setSearch] = useState("");
+
+  const debouncedSearch = useDebounce(search);
+
+  const { data: movieData, loading: movieLoading } = useFetch(
+    `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${debouncedSearch}`
+  );
+  const { data: tvData, loading: tvLoading } = useFetch(
+    `https://api.themoviedb.org/3/search/tv?api_key=${API_KEY}&query=${debouncedSearch}`
+  );
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+  };
+
+  return (
+    <div>
+      <div className={styles.searchBar}>
+        <span className="material-symbols-outlined">search</span>
+        <input
+          value={search}
+          onChange={handleChange}
+          type="text"
+          placeholder="Movies, shows and more"
+        />
+      </div>
+
+      {movieLoading || tvLoading ? (
         <div>
-            <div className = {styles.searchBar}>
-                <span 
-                    style={{
-                    color:'white',
-                }}
-                className="material-symbols-outlined">
-                    search
-                </span>
-                <input type="text" placeholder="Movies, shows, and more"/>
-            </div>
-            <div className={styles.contentGrid}>
-                {
-                    Array(15).fill(0).map((_,index) => (
-                        <ContentCard
-                            titles="Batman"
-                            description="The Batman is a 2022 American 
-                            superhero film based on the DC Comics character Batman. 
-                            Directed by Matt Reeves from a screenplay he wrote with Peter Craig, it is a reboot of the Batman film franchise produced by DC Films. Robert Pattinson stars as Bruce Wayne / Batman alongside Zoë Kravitz, Paul Dano, Jeffrey Wright, John Turturro, Peter Sarsgaard, Andy Serkis, and Colin Farrell. The film sees Batman, in his second year fighting crime in Gotham City, uncover corruption with ties to his own family while pursuing the Riddler (Dano), a mysterious serial killer targeting the city's elite."
-                            posterImage="https://images-cdn.ubuy.ae/634d0cc50dae823b9a54f97f-the-batman-movie-poster-i-am-the.jpg"
-                            bannerImage="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFOgNp9sUMI-9pvFItx1AORIHR8Pj3O84oF9CgvaxOH82XN51L2GSJmxrmHR9s9l5gNdY&usqp=CAU"
-                        />
-                    ))}
-            </div>
+          <h1
+            style={{
+              color: "white",
+              textAlign: "center",
+            }}
+          >
+            Loading...
+          </h1>
         </div>
-    );
+      ) : (
+        <>
+          <h1
+            style={{
+              color: "white",
+            }}
+          >
+            Movies
+          </h1>
+          <div className={styles.contentGrid}>
+            {movieData?.results &&
+              movieData.results.map((movieItem: any) => (
+                <ContentCard
+                  key={movieItem.id}
+                  title={movieItem.title}
+                  description={movieItem.overview}
+                  posterImage={`https://image.tmdb.org/t/p/w342/${movieItem.poster_path}`}
+                  bannerImage={`https://image.tmdb.org/t/p/w342/${movieItem.backdrop_path}`}
+                />
+              ))}
+          </div>
+          <h1
+            style={{
+              color: "white",
+            }}
+          >
+            TV Series
+          </h1>
+          <div className={styles.contentGrid}>
+            {tvData?.results &&
+              tvData.results.length > 0 &&
+              tvData.results.map((tvItem: any) => (
+                <ContentCard
+                  title={tvItem.name}
+                  description={tvItem.overview}
+                  posterImage={`https://image.tmdb.org/t/p/w342/${tvItem.poster_path}`}
+                  bannerImage={`https://image.tmdb.org/t/p/w342/${tvItem.backdrop_path}`}
+                />
+              ))}
+          </div>
+        </>
+      )}
+    </div>
+  );
 };
 
-export default Search
+export default Search;

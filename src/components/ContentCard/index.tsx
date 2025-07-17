@@ -1,14 +1,14 @@
 import styles from "./index.module.css";
 
 interface Props {
-    titles : string;
+    title : string;
     description: string;
     posterImage: string;
     bannerImage:  string;
     onClick?: ()=> void;
 }
 const ContentCard = (props : Props) => {
-    const { titles, description, posterImage, bannerImage, onClick } = props;
+    const { title, description, posterImage, bannerImage, onClick } = props;
 
     return (
         <div className={styles.container} onClick={onClick}>
@@ -29,7 +29,7 @@ const ContentCard = (props : Props) => {
                 />
             </div>
             <div className={styles.detailWrapper}>
-                <h3>{titles}</h3>
+                <h3>{title}</h3>
                 <p>{description}</p>
                 </div>
             </div>

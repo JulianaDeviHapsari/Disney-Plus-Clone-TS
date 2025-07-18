@@ -8,7 +8,7 @@ Disney Plus Clone Indonesia landingpage using HTML, CSS, TS with React and Fireb
 
 ## Screenshots
 
-![Disney_Plus_Clone_ScreenShoot](./Screenshot 2025-07-18 115313.png)
+![Disney_Plus_Clone_ScreenShoot](https://github.com/JulianaDeviHapsari/disney-app/blob/main/Screenshot%202025-07-18%20115313.png)
 
 ## Tech Stack
 

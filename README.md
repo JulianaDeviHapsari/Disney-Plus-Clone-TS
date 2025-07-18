@@ -1,6 +1,6 @@
 # Disney Plus Clone
 
-Disney Plus Clone Indonesia landingpage using HTML, CSS, TS with React and Firebase in Fast Campus Course
+Disney Plus Clone web app using HTML, CSS, TS with React and Firebase in Fast Campus Course
 
 ## Demo
 

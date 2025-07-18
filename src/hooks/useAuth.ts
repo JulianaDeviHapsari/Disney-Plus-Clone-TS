@@ -1,4 +1,4 @@
-import { type User, createUserWithEmailAndPassword, getAuth} from "firebase/auth";
+import { type User, createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
 import { useState } from "react";
 
 interface Params {
@@ -13,12 +13,17 @@ const useAuth = (params: Params = {}) => {
     const [error, setError] = useState("");
 
 
-    const createUser = async (email: string, password: string) => {
+    const createUser = async (email: string, password: string, name:string) => {
         const auth = getAuth();
         try {
         setError("");
         setLoading(true);
         const response = await createUserWithEmailAndPassword (auth, email, password);
+        if (auth.currentUser) {
+            updateProfile(auth.currentUser, {
+            displayName: name, 
+        });
+    }
         setLoading(false);
             if (typeof onSuccess === "function") {
                 onSuccess(response.user);
@@ -33,9 +38,37 @@ const useAuth = (params: Params = {}) => {
         }
     };
 
-    const login = (email: string, password: string) => {};
+    const login = async (email: string, password: string) => {
+        const auth = getAuth();
+        try{
+            setLoading(true);
+            setError("");
+            const response = await signInWithEmailAndPassword(auth, email, password);
+            setLoading(false);
+            if (typeof onSuccess === "function") {
+                onSuccess(response.user);
+            }
+        } catch (error : any) {
+            setError(error.message);
+            setLoading(false);  
+            if (typeof onError === "function") {
+                onError(error.user);
+            }
+        }
+    };
 
-    const logout = () => {};
+    const logout = async () => {
+        const auth = getAuth();
+        try{
+            setLoading(true);
+            setError("");
+            await signOut(auth);
+            setLoading(true);
+        } catch (error : any) {
+            setError(error.message);
+            setLoading(true);  
+        }
+    };
 
     return {
         createUser,

@@ -9,7 +9,7 @@ import useFetch from "../../hooks/useFetch";
 import useGenres from "../../hooks/useGenres";
 import { API_KEY } from "../../constants";
 import useMapGenreIdtoName from "../../hooks/useMapGenreIdToName";
-// import useAuthState from "../../hooks/useAuthState";
+import useAuthState from "../../hooks/useAuthState";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -17,7 +17,7 @@ const Home = () => {
     `https://api.themoviedb.org/3/trending/all/day?api_key=${API_KEY}`
   );
 
-//   const auth = useAuthState();
+  const auth = useAuthState();
 
   const { genres } = useGenres();
 
@@ -25,9 +25,7 @@ const Home = () => {
 
   const genreNames = useMapGenreIdtoName(firstContent.genre_ids, genres);
 
-//   const sectionTitle = auth
-//     ? `Hi ${auth.displayName}, recommended for you`
-//     : `Recommended for you`;
+  const sectionTitle = auth ? `Hi ${auth.displayName}, recommended for you` : `Recommended for you`;
 
   return (
     <div>
@@ -43,7 +41,7 @@ const Home = () => {
         language={firstContent.original_language}
       />
       <BannerMask>
-        <ScrollableSection title="Recommended For You">
+        <ScrollableSection title={sectionTitle}>
           {!loading &&
             data &&
             data.results.map((content: any) => (

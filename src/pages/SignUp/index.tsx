@@ -1,15 +1,22 @@
 import styles from "./index.module.css";
 import { useState } from "react";
 import useAuth from "../../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const {createUser, error, loading} = useAuth();
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const navigate = useNavigate();
+  const [password, setPassword] = useState("");
+  const { createUser, error, loading } = useAuth({
+    onSuccess: () => {
+      navigate("/");
+    },
+  });
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-   await createUser(email, password);    
+   await createUser(email, password, name);    
     };
 
     return (
@@ -24,12 +31,21 @@ const SignUp = () => {
                 </h1>
                 <form onSubmit={handleSubmit}className={styles.formWrapper}>
                 <input 
+                required 
                     value={email} 
                     onChange={(e) => setEmail(e.target.value)}
                     type ="text" 
-                    placeholder="Input your username" 
+                    placeholder="Input your email" 
                 />
                 <input 
+                required 
+                    value={name} 
+                    onChange={(e) => setName(e.target.value)}
+                    type ="text" 
+                    placeholder="Input your name" 
+                />
+                <input 
+                required 
                     value ={password} 
                     onChange={(e) => setPassword(e.target.value)}
                     type ="password" 

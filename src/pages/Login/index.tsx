@@ -1,13 +1,22 @@
+import { Link, useNavigate } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 import styles from "./index.module.css";
 import { useState } from "react";
 
 const Login = () => {
-    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate();
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const { login, loading, error} = useAuth({
+        onSuccess: () => {
+            navigate("/");
+        },
+    });
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Login");
+    await login(email, password);
     };
 
     return (
@@ -22,10 +31,10 @@ const Login = () => {
                 </h1>
                 <form onSubmit={handleSubmit}className={styles.formWrapper}>
                 <input 
-                    value={username} 
-                    onChange={(e) => setUsername(e.target.value)}
+                    value={email} 
+                    onChange={(e) => setEmail(e.target.value)}
                     type ="text" 
-                    placeholder="Input your username" 
+                    placeholder="Input your email" 
                 />
                 <input 
                     value ={password} 
@@ -34,7 +43,9 @@ const Login = () => {
                     placeholder="Input your password" 
                 />
                 <button 
-                    type ="submit">Login</button>
+                    type ="submit">{loading ? "Loading..." : "Login"}</button>
+                    <span className={styles.errorText}>{error}</span>
+                    <Link className={styles.signupText} to="/signup">No account yet? Sign up here</Link>
                 </form>
 
         </div>

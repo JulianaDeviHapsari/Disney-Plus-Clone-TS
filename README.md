@@ -18,10 +18,6 @@ Disney Plus Clone web app using HTML, CSS, TS with React and Firebase in Fast Ca
 
 The Disney Plus Clone Indonesia landing page, built with HTML, CSS, TypeScript, React, and Firebase in the Fast Campus course, is currently optimized for a 1920 × 1080 desktop resolution.
 
-## Upcoming Features
-
--
-
 ## Authors
 
 - [@Julianadevhapsari](https://github.com/JulianaDeviHapsari/)
